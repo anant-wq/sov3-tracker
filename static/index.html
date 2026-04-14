@@ -6,24 +6,216 @@
     <title>SO V3 — XpertPack</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #333; }
-        .header { background: #1a73e8; color: white; padding: 16px 24px; }
-        .header h1 { font-size: 20px; font-weight: 500; }
-        .container { max-width: 1400px; margin: 24px auto; padding: 0 24px; }
-        .status { padding: 12px; background: #e8f5e9; border-radius: 8px; margin-bottom: 16px; text-align: center; }
-        .loading { text-align: center; padding: 40px; color: #666; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #333; font-size: 13px; }
+        .header { background: #1a73e8; color: white; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; }
+        .header h1 { font-size: 18px; font-weight: 500; }
+        .header .btn-scan { background: white; color: #1a73e8; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 13px; }
+        .header .btn-scan:hover { background: #e8f0fe; }
+        .header .btn-scan:disabled { opacity: 0.6; cursor: not-allowed; }
+        .container { max-width: 1500px; margin: 20px auto; padding: 0 20px; }
+        .summary { display: flex; gap: 16px; margin-bottom: 20px; }
+        .card { background: white; border-radius: 8px; padding: 16px 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); flex: 1; }
+        .card .label { font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
+        .card .value { font-size: 28px; font-weight: 700; margin-top: 4px; }
+        .card .value.bpro { color: #d32f2f; }
+        .card .value.po { color: #e65100; }
+        .card .value.cust { color: #1a73e8; }
+        .tabs { display: flex; gap: 0; margin-bottom: 0; }
+        .tab { padding: 10px 24px; background: #e0e0e0; border: none; cursor: pointer; font-size: 13px; font-weight: 500; border-radius: 8px 8px 0 0; }
+        .tab.active { background: white; color: #1a73e8; }
+        .tab .badge { background: #e0e0e0; color: #333; padding: 2px 8px; border-radius: 10px; font-size: 11px; margin-left: 6px; }
+        .tab.active .badge { background: #e8f0fe; color: #1a73e8; }
+        .panel { background: white; border-radius: 0 8px 8px 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow: hidden; }
+        .toolbar { padding: 12px 16px; border-bottom: 1px solid #eee; display: flex; gap: 12px; align-items: center; }
+        .toolbar input, .toolbar select { padding: 6px 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 13px; }
+        .toolbar input { width: 250px; }
+        table { width: 100%; border-collapse: collapse; }
+        th { background: #fafafa; text-align: left; padding: 8px 12px; font-weight: 600; font-size: 11px; text-transform: uppercase; color: #666; border-bottom: 2px solid #eee; position: sticky; top: 0; }
+        td { padding: 7px 12px; border-bottom: 1px solid #f0f0f0; }
+        tr:hover { background: #f8f9ff; }
+        .table-wrap { max-height: 600px; overflow-y: auto; }
+        .need-high { color: #d32f2f; font-weight: 600; }
+        .need-med { color: #e65100; font-weight: 600; }
+        .need-low { color: #333; }
+        .type-tag { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 500; }
+        .type-corr { background: #fff3e0; color: #e65100; }
+        .type-lid { background: #e3f2fd; color: #1565c0; }
+        .type-foam { background: #fce4ec; color: #c62828; }
+        .type-plastic { background: #f3e5f5; color: #7b1fa2; }
+        .type-consumable { background: #e8f5e9; color: #2e7d32; }
+        .loading-bar { padding: 40px; text-align: center; color: #666; }
+        .loading-bar .spinner { display: inline-block; width: 20px; height: 20px; border: 3px solid #ddd; border-top-color: #1a73e8; border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 8px; vertical-align: middle; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .progress { margin-top: 8px; font-size: 12px; color: #999; }
+        .num { text-align: right; font-variant-numeric: tabular-nums; }
+        .customer-group { background: #f5f7ff; font-weight: 600; }
+        .customer-group td { padding: 10px 12px; color: #1a73e8; border-bottom: 2px solid #1a73e8; }
     </style>
 </head>
 <body>
-    <div class="header"><h1>Sales Order V3 — Shortfall Tracker</h1></div>
-    <div class="container">
-        <div class="status">API is running. You will build the frontend here.</div>
-        <p>Endpoints:</p>
-        <ul>
-            <li><a href="/api/customers">/api/customers</a> — list all customers</li>
-            <li>/api/customer/{name} — get tracker data for one customer</li>
-            <li><a href="/api/shortfalls">/api/shortfalls</a> — full BPRO/PO shortfall scan (takes ~2 min)</li>
-        </ul>
+    <div class="header">
+        <h1>Sales Order V3 — Shortfall Tracker</h1>
+        <button class="btn-scan" id="btnScan" onclick="runScan()">Scan All Customers</button>
     </div>
+    <div class="container">
+        <div class="summary">
+            <div class="card"><div class="label">Items Needing BPRO</div><div class="value bpro" id="bproCount">—</div></div>
+            <div class="card"><div class="label">Items Needing PO</div><div class="value po" id="poCount">—</div></div>
+            <div class="card"><div class="label">Customers Scanned</div><div class="value cust" id="custCount">—</div></div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" id="tabBpro" onclick="switchTab('bpro')">BPRO Needed <span class="badge" id="bproBadge">0</span></button>
+            <button class="tab" id="tabPo" onclick="switchTab('po')">PO Needed <span class="badge" id="poBadge">0</span></button>
+        </div>
+
+        <div class="panel">
+            <div class="toolbar">
+                <input type="text" id="searchBox" placeholder="Search customer, item code..." oninput="renderTable()">
+                <select id="typeFilter" onchange="renderTable()">
+                    <option value="">All Types</option>
+                </select>
+                <select id="customerFilter" onchange="renderTable()">
+                    <option value="">All Customers</option>
+                </select>
+            </div>
+            <div class="table-wrap" id="tableWrap">
+                <div class="loading-bar" id="loadingMsg">
+                    <div>Click <strong>Scan All Customers</strong> to begin.</div>
+                    <div class="progress">This scans all 87 customers and takes about 2 minutes.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+let data = { bpro: [], po: [] };
+let activeTab = 'bpro';
+
+function switchTab(tab) {
+    activeTab = tab;
+    document.getElementById('tabBpro').classList.toggle('active', tab === 'bpro');
+    document.getElementById('tabPo').classList.toggle('active', tab === 'po');
+    populateFilters();
+    renderTable();
+}
+
+function populateFilters() {
+    const items = data[activeTab] || [];
+    const types = [...new Set(items.map(i => i.type))].sort();
+    const customers = [...new Set(items.map(i => i.customer))].sort();
+
+    const tf = document.getElementById('typeFilter');
+    tf.innerHTML = '<option value="">All Types</option>' + types.map(t => `<option value="${t}">${t}</option>`).join('');
+
+    const cf = document.getElementById('customerFilter');
+    cf.innerHTML = '<option value="">All Customers</option>' + customers.map(c => `<option value="${c}">${c}</option>`).join('');
+}
+
+function needClass(v) {
+    if (v >= 1000) return 'need-high';
+    if (v >= 100) return 'need-med';
+    return 'need-low';
+}
+
+function typeTag(t) {
+    const cls = { corr: 'type-corr', Lid: 'type-lid', Foam: 'type-foam', Plastic: 'type-plastic', Consumable: 'type-consumable' };
+    return `<span class="type-tag ${cls[t] || ''}">${t}</span>`;
+}
+
+function fmt(n) {
+    return n.toLocaleString('en-IN');
+}
+
+function renderTable() {
+    const items = data[activeTab] || [];
+    const search = document.getElementById('searchBox').value.toLowerCase();
+    const typeF = document.getElementById('typeFilter').value;
+    const custF = document.getElementById('customerFilter').value;
+
+    let filtered = items.filter(i => {
+        if (search && !i.customer.toLowerCase().includes(search) && !i.item_code.toLowerCase().includes(search) && !i.customer_item.toLowerCase().includes(search)) return false;
+        if (typeF && i.type !== typeF) return false;
+        if (custF && i.customer !== custF) return false;
+        return true;
+    });
+
+    // Sort by net_need descending
+    filtered.sort((a, b) => b.net_need - a.net_need);
+
+    // Group by customer
+    const grouped = {};
+    filtered.forEach(i => {
+        if (!grouped[i.customer]) grouped[i.customer] = [];
+        grouped[i.customer].push(i);
+    });
+
+    const isPO = activeTab === 'po';
+    let html = '<table><thead><tr>';
+    html += '<th>Customer</th><th>Customer Item</th><th>Item Code</th><th>Type</th><th>SO</th>';
+    html += '<th class="num">Pending</th><th class="num">FG Stock</th><th class="num">Net Need</th>';
+    html += '</tr></thead><tbody>';
+
+    // Sort customers by total need descending
+    const custOrder = Object.entries(grouped)
+        .map(([c, items]) => [c, items.reduce((s, i) => s + i.net_need, 0)])
+        .sort((a, b) => b[1] - a[1]);
+
+    for (const [cust, totalNeed] of custOrder) {
+        const items = grouped[cust];
+        html += `<tr class="customer-group"><td colspan="8">${cust} (${items.length} items, total need: ${fmt(totalNeed)})</td></tr>`;
+        for (const i of items) {
+            html += '<tr>';
+            html += `<td>${i.customer}</td>`;
+            html += `<td>${i.customer_item}</td>`;
+            html += `<td title="${i.item_code}">${i.item_code.length > 50 ? i.item_code.slice(0, 50) + '...' : i.item_code}</td>`;
+            html += `<td>${typeTag(i.type)}</td>`;
+            html += `<td>${i.so}</td>`;
+            html += `<td class="num">${fmt(i.pending)}</td>`;
+            html += `<td class="num">${fmt(i.fg)}</td>`;
+            html += `<td class="num ${needClass(i.net_need)}">${fmt(i.net_need)}</td>`;
+            html += '</tr>';
+        }
+    }
+
+    html += '</tbody></table>';
+
+    if (filtered.length === 0) {
+        html = '<div class="loading-bar">No items found matching your filters.</div>';
+    }
+
+    document.getElementById('tableWrap').innerHTML = html;
+}
+
+async function runScan() {
+    const btn = document.getElementById('btnScan');
+    btn.disabled = true;
+    btn.textContent = 'Scanning...';
+
+    document.getElementById('tableWrap').innerHTML = '<div class="loading-bar"><div class="spinner"></div> Scanning all customers... this takes about 2 minutes.<div class="progress">Reading each customer from the Google Sheet tracker.</div></div>';
+
+    try {
+        const resp = await fetch('/api/shortfalls');
+        const result = await resp.json();
+
+        data.bpro = result.bpro || [];
+        data.po = result.po || [];
+
+        document.getElementById('bproCount').textContent = data.bpro.length;
+        document.getElementById('poCount').textContent = data.po.length;
+        document.getElementById('custCount').textContent = result.summary?.customers_scanned || '—';
+        document.getElementById('bproBadge').textContent = data.bpro.length;
+        document.getElementById('poBadge').textContent = data.po.length;
+
+        populateFilters();
+        renderTable();
+    } catch (e) {
+        document.getElementById('tableWrap').innerHTML = `<div class="loading-bar" style="color:#d32f2f">Error: ${e.message}</div>`;
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'Scan All Customers';
+}
+</script>
 </body>
 </html>
