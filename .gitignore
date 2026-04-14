@@ -1,0 +1,7 @@
+credentials.json
+__pycache__/
+*.pyc
+venv/
+.env
+bpro_needs.json
+po_needs.json

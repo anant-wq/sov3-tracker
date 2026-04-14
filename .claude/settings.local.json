@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__mcp-registry__search_mcp_registry",
+      "Bash(gcloud --version)",
+      "Bash(ls -lt ~/Downloads/*.json)",
+      "Bash(pip3 install:*)",
+      "Bash(python3 sheets_tool.py)",
+      "Bash(python3 -c \"import json; d=json.load\\(open\\('credentials.json'\\)\\); print\\('Email:', d['client_email']\\)\")",
+      "Bash(python3 -c ':*)",
+      "Bash(python3)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}
