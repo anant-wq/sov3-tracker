@@ -195,7 +195,7 @@ async function runScan() {
     document.getElementById('tableWrap').innerHTML = '<div class="loading-bar"><div class="spinner"></div> Scanning all customers... this takes about 2 minutes.<div class="progress">Reading each customer from the Google Sheet tracker.</div></div>';
 
     try {
-        const resp = await fetch('/api/shortfalls');
+        const resp = await fetch('api/shortfalls');
         const result = await resp.json();
 
         data.bpro = result.bpro || [];
