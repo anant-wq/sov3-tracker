@@ -9,212 +9,376 @@
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #333; font-size: 13px; }
         .header { background: #1a73e8; color: white; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; }
         .header h1 { font-size: 18px; font-weight: 500; }
-        .header .btn-scan { background: white; color: #1a73e8; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 13px; }
-        .header .btn-scan:hover { background: #e8f0fe; }
-        .header .btn-scan:disabled { opacity: 0.6; cursor: not-allowed; }
-        .container { max-width: 1500px; margin: 20px auto; padding: 0 20px; }
-        .summary { display: flex; gap: 16px; margin-bottom: 20px; }
-        .card { background: white; border-radius: 8px; padding: 16px 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); flex: 1; }
+        .header-btns { display: flex; gap: 8px; }
+        .btn { background: white; color: #1a73e8; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 13px; }
+        .btn:hover { background: #e8f0fe; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .btn-outline { background: transparent; color: white; border: 1.5px solid white; }
+        .btn-outline:hover { background: rgba(255,255,255,0.15); }
+        .container { max-width: 1600px; margin: 20px auto; padding: 0 20px; }
+
+        /* View switcher */
+        .view-switcher { display: flex; gap: 0; margin-bottom: 16px; }
+        .view-btn { padding: 10px 28px; background: #ddd; border: none; cursor: pointer; font-size: 14px; font-weight: 600; }
+        .view-btn:first-child { border-radius: 8px 0 0 8px; }
+        .view-btn:last-child { border-radius: 0 8px 8px 0; }
+        .view-btn.active { background: #1a73e8; color: white; }
+
+        .summary { display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+        .card { background: white; border-radius: 8px; padding: 16px 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); flex: 1; min-width: 140px; }
         .card .label { font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
         .card .value { font-size: 28px; font-weight: 700; margin-top: 4px; }
-        .card .value.bpro { color: #d32f2f; }
-        .card .value.po { color: #e65100; }
-        .card .value.cust { color: #1a73e8; }
+        .card .value.red { color: #d32f2f; }
+        .card .value.orange { color: #e65100; }
+        .card .value.blue { color: #1a73e8; }
+        .card .value.purple { color: #7b1fa2; }
+
         .tabs { display: flex; gap: 0; margin-bottom: 0; }
         .tab { padding: 10px 24px; background: #e0e0e0; border: none; cursor: pointer; font-size: 13px; font-weight: 500; border-radius: 8px 8px 0 0; }
         .tab.active { background: white; color: #1a73e8; }
         .tab .badge { background: #e0e0e0; color: #333; padding: 2px 8px; border-radius: 10px; font-size: 11px; margin-left: 6px; }
         .tab.active .badge { background: #e8f0fe; color: #1a73e8; }
+
         .panel { background: white; border-radius: 0 8px 8px 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); overflow: hidden; }
-        .toolbar { padding: 12px 16px; border-bottom: 1px solid #eee; display: flex; gap: 12px; align-items: center; }
+        .toolbar { padding: 12px 16px; border-bottom: 1px solid #eee; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
         .toolbar input, .toolbar select { padding: 6px 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 13px; }
         .toolbar input { width: 250px; }
+        .toolbar label { font-size: 12px; display: flex; align-items: center; gap: 4px; cursor: pointer; }
+
         table { width: 100%; border-collapse: collapse; }
-        th { background: #fafafa; text-align: left; padding: 8px 12px; font-weight: 600; font-size: 11px; text-transform: uppercase; color: #666; border-bottom: 2px solid #eee; position: sticky; top: 0; }
+        th { background: #fafafa; text-align: left; padding: 8px 12px; font-weight: 600; font-size: 11px; text-transform: uppercase; color: #666; border-bottom: 2px solid #eee; position: sticky; top: 0; z-index: 1; }
         td { padding: 7px 12px; border-bottom: 1px solid #f0f0f0; }
         tr:hover { background: #f8f9ff; }
         .table-wrap { max-height: 600px; overflow-y: auto; }
+        .num { text-align: right; font-variant-numeric: tabular-nums; }
+
         .need-high { color: #d32f2f; font-weight: 600; }
         .need-med { color: #e65100; font-weight: 600; }
         .need-low { color: #333; }
+
         .type-tag { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: 500; }
         .type-corr { background: #fff3e0; color: #e65100; }
         .type-lid { background: #e3f2fd; color: #1565c0; }
         .type-foam { background: #fce4ec; color: #c62828; }
         .type-plastic { background: #f3e5f5; color: #7b1fa2; }
         .type-consumable { background: #e8f5e9; color: #2e7d32; }
+        .type-sleeve { background: #fff8e1; color: #f57f17; }
+        .type-pp { background: #e0f7fa; color: #00695c; }
+        .type-composite { background: #fce4ec; color: #880e4f; }
+
+        .row-composite { background: #fce4ec !important; }
+        .row-composite td { font-weight: 600; color: #880e4f; }
+        .row-shortfall { background: #fff9c4 !important; }
+        .row-shortfall:hover { background: #fff59d !important; }
+
+        .customer-group { background: #f5f7ff; font-weight: 600; }
+        .customer-group td { padding: 10px 12px; color: #1a73e8; border-bottom: 2px solid #1a73e8; }
+
         .loading-bar { padding: 40px; text-align: center; color: #666; }
         .loading-bar .spinner { display: inline-block; width: 20px; height: 20px; border: 3px solid #ddd; border-top-color: #1a73e8; border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 8px; vertical-align: middle; }
         @keyframes spin { to { transform: rotate(360deg); } }
         .progress { margin-top: 8px; font-size: 12px; color: #999; }
-        .num { text-align: right; font-variant-numeric: tabular-nums; }
-        .customer-group { background: #f5f7ff; font-weight: 600; }
-        .customer-group td { padding: 10px 12px; color: #1a73e8; border-bottom: 2px solid #1a73e8; }
+
+        .legend { display: flex; gap: 16px; margin-bottom: 12px; font-size: 12px; }
+        .legend-item { display: flex; align-items: center; gap: 4px; }
+        .legend-swatch { width: 16px; height: 16px; border-radius: 3px; }
+
+        .hidden { display: none; }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>Sales Order V3 — Shortfall Tracker</h1>
-        <button class="btn-scan" id="btnScan" onclick="runScan()">Scan All Customers</button>
+        <h1>XpertPack — Shortfall Tracker</h1>
+        <div class="header-btns">
+            <button class="btn" id="btnScan" onclick="loadData()">Load Data</button>
+        </div>
     </div>
     <div class="container">
-        <div class="summary">
-            <div class="card"><div class="label">Items Needing BPRO</div><div class="value bpro" id="bproCount">—</div></div>
-            <div class="card"><div class="label">Items Needing PO</div><div class="value po" id="poCount">—</div></div>
-            <div class="card"><div class="label">Customers Scanned</div><div class="value cust" id="custCount">—</div></div>
+        <!-- View switcher: SO vs Monthly Plan -->
+        <div class="view-switcher">
+            <button class="view-btn active" id="viewSO" onclick="switchView('so')">Sales Orders</button>
+            <button class="view-btn" id="viewMP" onclick="switchView('mp')">Monthly Plan</button>
         </div>
 
-        <div class="tabs">
-            <button class="tab active" id="tabBpro" onclick="switchTab('bpro')">BPRO Needed <span class="badge" id="bproBadge">0</span></button>
-            <button class="tab" id="tabPo" onclick="switchTab('po')">PO Needed <span class="badge" id="poBadge">0</span></button>
-        </div>
-
-        <div class="panel">
-            <div class="toolbar">
-                <input type="text" id="searchBox" placeholder="Search customer, item code..." oninput="renderTable()">
-                <select id="typeFilter" onchange="renderTable()">
-                    <option value="">All Types</option>
-                </select>
-                <select id="customerFilter" onchange="renderTable()">
-                    <option value="">All Customers</option>
-                </select>
+        <!-- ===== SO VIEW ===== -->
+        <div id="soView">
+            <div class="summary" id="soSummary">
+                <div class="card"><div class="label">BPRO Needed</div><div class="value red" id="bproCount">—</div></div>
+                <div class="card"><div class="label">PO Needed</div><div class="value orange" id="poCount">—</div></div>
+                <div class="card"><div class="label">Customers</div><div class="value blue" id="custCount">—</div></div>
             </div>
-            <div class="table-wrap" id="tableWrap">
-                <div class="loading-bar" id="loadingMsg">
-                    <div>Click <strong>Scan All Customers</strong> to begin.</div>
-                    <div class="progress">This scans all 87 customers and takes about 2 minutes.</div>
+            <div class="tabs">
+                <button class="tab active" id="tabBpro" onclick="switchSOTab('bpro')">BPRO Needed <span class="badge" id="bproBadge">0</span></button>
+                <button class="tab" id="tabPo" onclick="switchSOTab('po')">PO Needed <span class="badge" id="poBadge">0</span></button>
+            </div>
+            <div class="panel">
+                <div class="toolbar">
+                    <input type="text" id="soSearch" placeholder="Search customer, item code..." oninput="renderSOTable()">
+                    <select id="soTypeFilter" onchange="renderSOTable()"><option value="">All Types</option></select>
+                    <select id="soCustomerFilter" onchange="renderSOTable()"><option value="">All Customers</option></select>
+                </div>
+                <div class="table-wrap" id="soTableWrap">
+                    <div class="loading-bar">Click <strong>Load Data</strong> to begin.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== MONTHLY PLAN VIEW ===== -->
+        <div id="mpView" class="hidden">
+            <div class="summary" id="mpSummary">
+                <div class="card"><div class="label">Shortfalls</div><div class="value red" id="mpShortfalls">—</div></div>
+                <div class="card"><div class="label">Need BPRO</div><div class="value orange" id="mpBpro">—</div></div>
+                <div class="card"><div class="label">Need IPRO</div><div class="value purple" id="mpIpro">—</div></div>
+                <div class="card"><div class="label">Need PO</div><div class="value blue" id="mpPo">—</div></div>
+                <div class="card"><div class="label">Customers</div><div class="value blue" id="mpCust">—</div></div>
+            </div>
+            <div class="legend">
+                <div class="legend-item"><div class="legend-swatch" style="background:#fce4ec"></div> Composite (parent BOM)</div>
+                <div class="legend-item"><div class="legend-swatch" style="background:#fff9c4"></div> Shortfall (FG + orders not enough)</div>
+            </div>
+            <div class="tabs">
+                <button class="tab active" id="tabAll" onclick="switchMPTab('all')">All Items <span class="badge" id="allBadge">0</span></button>
+                <button class="tab" id="tabShort" onclick="switchMPTab('shortfall')">Shortfalls Only <span class="badge" id="shortBadge">0</span></button>
+                <button class="tab" id="tabNeedBpro" onclick="switchMPTab('need_bpro')">Need BPRO <span class="badge" id="nbproBadge">0</span></button>
+                <button class="tab" id="tabNeedIpro" onclick="switchMPTab('need_ipro')">Need IPRO <span class="badge" id="niproBadge">0</span></button>
+                <button class="tab" id="tabNeedPo" onclick="switchMPTab('need_po')">Need PO <span class="badge" id="npoBadge">0</span></button>
+            </div>
+            <div class="panel">
+                <div class="toolbar">
+                    <input type="text" id="mpSearch" placeholder="Search customer, item, MP..." oninput="renderMPTable()">
+                    <select id="mpTypeFilter" onchange="renderMPTable()"><option value="">All Types</option></select>
+                    <select id="mpCustomerFilter" onchange="renderMPTable()"><option value="">All Customers</option></select>
+                    <label><input type="checkbox" id="mpHideComposite" onchange="renderMPTable()"> Hide composites</label>
+                </div>
+                <div class="table-wrap" id="mpTableWrap">
+                    <div class="loading-bar">Click <strong>Load Data</strong> to begin.</div>
                 </div>
             </div>
         </div>
     </div>
 
 <script>
-let data = { bpro: [], po: [] };
-let activeTab = 'bpro';
+/* ===== STATE ===== */
+let soData = { bpro: [], po: [] };
+let mpData = { items: [], summary: {} };
+let activeSOTab = 'bpro';
+let activeMPTab = 'all';
+let activeView = 'so';
 
-function switchTab(tab) {
-    activeTab = tab;
+/* ===== HELPERS ===== */
+function fmt(n) { return n.toLocaleString('en-IN'); }
+function needClass(v) { return v >= 1000 ? 'need-high' : v >= 100 ? 'need-med' : 'need-low'; }
+
+const typeCls = {
+    corr: 'type-corr', Lid: 'type-lid', Foam: 'type-foam', Plastic: 'type-plastic',
+    Consumable: 'type-consumable', Sleeve: 'type-sleeve', pp: 'type-pp', composite: 'type-composite'
+};
+function typeTag(t) { return `<span class="type-tag ${typeCls[t] || ''}">${t}</span>`; }
+
+/* ===== VIEW SWITCHING ===== */
+function switchView(v) {
+    activeView = v;
+    document.getElementById('viewSO').classList.toggle('active', v === 'so');
+    document.getElementById('viewMP').classList.toggle('active', v === 'mp');
+    document.getElementById('soView').classList.toggle('hidden', v !== 'so');
+    document.getElementById('mpView').classList.toggle('hidden', v !== 'mp');
+}
+
+/* ===== SO VIEW ===== */
+function switchSOTab(tab) {
+    activeSOTab = tab;
     document.getElementById('tabBpro').classList.toggle('active', tab === 'bpro');
     document.getElementById('tabPo').classList.toggle('active', tab === 'po');
-    populateFilters();
-    renderTable();
+    populateSOFilters();
+    renderSOTable();
 }
 
-function populateFilters() {
-    const items = data[activeTab] || [];
+function populateSOFilters() {
+    const items = soData[activeSOTab] || [];
     const types = [...new Set(items.map(i => i.type))].sort();
-    const customers = [...new Set(items.map(i => i.customer))].sort();
-
-    const tf = document.getElementById('typeFilter');
-    tf.innerHTML = '<option value="">All Types</option>' + types.map(t => `<option value="${t}">${t}</option>`).join('');
-
-    const cf = document.getElementById('customerFilter');
-    cf.innerHTML = '<option value="">All Customers</option>' + customers.map(c => `<option value="${c}">${c}</option>`).join('');
+    const custs = [...new Set(items.map(i => i.customer))].sort();
+    document.getElementById('soTypeFilter').innerHTML = '<option value="">All Types</option>' + types.map(t => `<option>${t}</option>`).join('');
+    document.getElementById('soCustomerFilter').innerHTML = '<option value="">All Customers</option>' + custs.map(c => `<option>${c}</option>`).join('');
 }
 
-function needClass(v) {
-    if (v >= 1000) return 'need-high';
-    if (v >= 100) return 'need-med';
-    return 'need-low';
-}
-
-function typeTag(t) {
-    const cls = { corr: 'type-corr', Lid: 'type-lid', Foam: 'type-foam', Plastic: 'type-plastic', Consumable: 'type-consumable' };
-    return `<span class="type-tag ${cls[t] || ''}">${t}</span>`;
-}
-
-function fmt(n) {
-    return n.toLocaleString('en-IN');
-}
-
-function renderTable() {
-    const items = data[activeTab] || [];
-    const search = document.getElementById('searchBox').value.toLowerCase();
-    const typeF = document.getElementById('typeFilter').value;
-    const custF = document.getElementById('customerFilter').value;
+function renderSOTable() {
+    const items = soData[activeSOTab] || [];
+    const search = document.getElementById('soSearch').value.toLowerCase();
+    const typeF = document.getElementById('soTypeFilter').value;
+    const custF = document.getElementById('soCustomerFilter').value;
 
     let filtered = items.filter(i => {
-        if (search && !i.customer.toLowerCase().includes(search) && !i.item_code.toLowerCase().includes(search) && !i.customer_item.toLowerCase().includes(search)) return false;
+        if (search && !i.customer.toLowerCase().includes(search) && !i.item_code.toLowerCase().includes(search) && !(i.customer_item||'').toLowerCase().includes(search)) return false;
+        if (typeF && i.type !== typeF) return false;
+        if (custF && i.customer !== custF) return false;
+        return true;
+    });
+    filtered.sort((a, b) => b.net_need - a.net_need);
+
+    const grouped = {};
+    filtered.forEach(i => { (grouped[i.customer] = grouped[i.customer] || []).push(i); });
+    const custOrder = Object.entries(grouped).map(([c, arr]) => [c, arr.reduce((s, i) => s + i.net_need, 0)]).sort((a, b) => b[1] - a[1]);
+
+    let html = '<table><thead><tr><th>Customer</th><th>Customer Item</th><th>Item Code</th><th>Type</th><th>SO</th><th class="num">Pending</th><th class="num">FG</th><th class="num">Net Need</th></tr></thead><tbody>';
+    for (const [cust, total] of custOrder) {
+        const arr = grouped[cust];
+        html += `<tr class="customer-group"><td colspan="8">${cust} (${arr.length} items, need: ${fmt(total)})</td></tr>`;
+        for (const i of arr) {
+            html += `<tr><td>${i.customer}</td><td>${i.customer_item||''}</td><td title="${i.item_code}">${i.item_code.length > 50 ? i.item_code.slice(0,50)+'...' : i.item_code}</td><td>${typeTag(i.type)}</td><td>${i.so}</td><td class="num">${fmt(i.pending)}</td><td class="num">${fmt(i.fg)}</td><td class="num ${needClass(i.net_need)}">${fmt(i.net_need)}</td></tr>`;
+        }
+    }
+    html += '</tbody></table>';
+    if (!filtered.length) html = '<div class="loading-bar">No items found.</div>';
+    document.getElementById('soTableWrap').innerHTML = html;
+}
+
+/* ===== MONTHLY PLAN VIEW ===== */
+function switchMPTab(tab) {
+    activeMPTab = tab;
+    ['tabAll','tabShort','tabNeedBpro','tabNeedIpro','tabNeedPo'].forEach(id => document.getElementById(id).classList.remove('active'));
+    const map = { all: 'tabAll', shortfall: 'tabShort', need_bpro: 'tabNeedBpro', need_ipro: 'tabNeedIpro', need_po: 'tabNeedPo' };
+    document.getElementById(map[tab]).classList.add('active');
+    renderMPTable();
+}
+
+function populateMPFilters() {
+    const items = mpData.items || [];
+    const types = [...new Set(items.map(i => i.type).filter(Boolean))].sort();
+    const custs = [...new Set(items.map(i => i.customer))].sort();
+    document.getElementById('mpTypeFilter').innerHTML = '<option value="">All Types</option>' + types.map(t => `<option>${t}</option>`).join('');
+    document.getElementById('mpCustomerFilter').innerHTML = '<option value="">All Customers</option>' + custs.map(c => `<option>${c}</option>`).join('');
+}
+
+const BPRO_TYPES = new Set(['corr','Lid','Die','Sleeve']);
+const PO_TYPES = new Set(['Plastic','Foam','Consumable','VCI','ESD','LDPE/HDPE','wrap','tapes','straps','stickers','Chemical','Metal','pp','PET']);
+
+function renderMPTable() {
+    const items = mpData.items || [];
+    const search = document.getElementById('mpSearch').value.toLowerCase();
+    const typeF = document.getElementById('mpTypeFilter').value;
+    const custF = document.getElementById('mpCustomerFilter').value;
+    const hideComp = document.getElementById('mpHideComposite').checked;
+
+    let filtered = items.filter(i => {
+        if (hideComp && i.is_composite) return false;
+        if (activeMPTab === 'shortfall' && !i.is_shortfall) return false;
+        if (activeMPTab === 'need_bpro' && !(BPRO_TYPES.has(i.type) && i.net_need > 0 && !i.bpro_no)) return false;
+        if (activeMPTab === 'need_ipro' && !(BPRO_TYPES.has(i.type) && i.net_need > 0 && !i.ipro_no)) return false;
+        if (activeMPTab === 'need_po' && !(PO_TYPES.has(i.type) && i.net_need > 0 && !i.po_no)) return false;
+        if (search && !i.customer.toLowerCase().includes(search) && !i.item_code.toLowerCase().includes(search) && !i.mp.toLowerCase().includes(search)) return false;
         if (typeF && i.type !== typeF) return false;
         if (custF && i.customer !== custF) return false;
         return true;
     });
 
-    // Sort by net_need descending
-    filtered.sort((a, b) => b.net_need - a.net_need);
-
     // Group by customer
     const grouped = {};
-    filtered.forEach(i => {
-        if (!grouped[i.customer]) grouped[i.customer] = [];
-        grouped[i.customer].push(i);
-    });
-
-    const isPO = activeTab === 'po';
-    let html = '<table><thead><tr>';
-    html += '<th>Customer</th><th>Customer Item</th><th>Item Code</th><th>Type</th><th>SO</th>';
-    html += '<th class="num">Pending</th><th class="num">FG Stock</th><th class="num">Net Need</th>';
-    html += '</tr></thead><tbody>';
-
-    // Sort customers by total need descending
+    filtered.forEach(i => { (grouped[i.customer] = grouped[i.customer] || []).push(i); });
     const custOrder = Object.entries(grouped)
-        .map(([c, items]) => [c, items.reduce((s, i) => s + i.net_need, 0)])
+        .map(([c, arr]) => [c, arr.filter(i => !i.is_composite).reduce((s, i) => s + Math.max(0, -i.action), 0)])
         .sort((a, b) => b[1] - a[1]);
 
-    for (const [cust, totalNeed] of custOrder) {
-        const items = grouped[cust];
-        html += `<tr class="customer-group"><td colspan="8">${cust} (${items.length} items, total need: ${fmt(totalNeed)})</td></tr>`;
-        for (const i of items) {
-            html += '<tr>';
+    let html = '<table><thead><tr>';
+    html += '<th>Customer</th><th>MP</th><th>Item Code</th><th>Type</th><th>BOM</th>';
+    html += '<th class="num">Pending</th><th class="num">FG</th>';
+    html += '<th>BPRO</th><th class="num">BPRO Qty</th>';
+    html += '<th>IPRO</th><th class="num">IPRO Qty</th>';
+    html += '<th>PO</th><th class="num">PO Qty</th>';
+    html += '<th class="num">Action</th>';
+    html += '</tr></thead><tbody>';
+
+    for (const [cust, totalShort] of custOrder) {
+        const arr = grouped[cust];
+        const shorts = arr.filter(i => i.is_shortfall && !i.is_composite).length;
+        html += `<tr class="customer-group"><td colspan="14">${cust} — ${arr.length} items${shorts ? ', <span style="color:#d32f2f">' + shorts + ' shortfalls</span>' : ''}</td></tr>`;
+
+        // Sort: composites first, then by action ascending (worst shortfalls first)
+        arr.sort((a, b) => {
+            if (a.is_composite !== b.is_composite) return a.is_composite ? -1 : 1;
+            return a.action - b.action;
+        });
+
+        for (const i of arr) {
+            const rowCls = i.is_composite ? 'row-composite' : i.is_shortfall ? 'row-shortfall' : '';
+            const actionCls = i.action < 0 ? 'need-high' : i.action === 0 ? 'need-med' : '';
+            const codeDisplay = i.item_code.length > 45 ? i.item_code.slice(0,45)+'...' : i.item_code;
+            html += `<tr class="${rowCls}">`;
             html += `<td>${i.customer}</td>`;
-            html += `<td>${i.customer_item}</td>`;
-            html += `<td title="${i.item_code}">${i.item_code.length > 50 ? i.item_code.slice(0, 50) + '...' : i.item_code}</td>`;
+            html += `<td>${i.mp}</td>`;
+            html += `<td title="${i.item_code}">${codeDisplay}</td>`;
             html += `<td>${typeTag(i.type)}</td>`;
-            html += `<td>${i.so}</td>`;
-            html += `<td class="num">${fmt(i.pending)}</td>`;
+            html += `<td>${i.bom_level || '—'}</td>`;
+            html += `<td class="num">${fmt(i.final_pending)}</td>`;
             html += `<td class="num">${fmt(i.fg)}</td>`;
-            html += `<td class="num ${needClass(i.net_need)}">${fmt(i.net_need)}</td>`;
+            html += `<td title="${i.bpro_no}">${i.bpro_no ? '✓' : (BPRO_TYPES.has(i.type) && i.net_need > 0 ? '<span style="color:#d32f2f">—</span>' : '')}</td>`;
+            html += `<td class="num">${i.bpro_qty ? fmt(i.bpro_qty) : ''}</td>`;
+            html += `<td title="${i.ipro_no}">${i.ipro_no ? '✓' : (BPRO_TYPES.has(i.type) && i.net_need > 0 ? '<span style="color:#d32f2f">—</span>' : '')}</td>`;
+            html += `<td class="num">${i.ipro_qty ? fmt(i.ipro_qty) : ''}</td>`;
+            html += `<td title="${i.po_no}">${i.po_no ? '✓' : (PO_TYPES.has(i.type) && i.net_need > 0 ? '<span style="color:#d32f2f">—</span>' : '')}</td>`;
+            html += `<td class="num">${i.po_qty ? fmt(i.po_qty) : ''}</td>`;
+            html += `<td class="num ${actionCls}">${i.is_composite ? '' : fmt(i.action)}</td>`;
             html += '</tr>';
         }
     }
-
     html += '</tbody></table>';
-
-    if (filtered.length === 0) {
-        html = '<div class="loading-bar">No items found matching your filters.</div>';
-    }
-
-    document.getElementById('tableWrap').innerHTML = html;
+    if (!filtered.length) html = '<div class="loading-bar">No items found.</div>';
+    document.getElementById('mpTableWrap').innerHTML = html;
 }
 
-async function runScan() {
+/* ===== LOAD DATA ===== */
+async function loadData() {
     const btn = document.getElementById('btnScan');
     btn.disabled = true;
-    btn.textContent = 'Scanning...';
+    btn.textContent = 'Loading...';
 
-    document.getElementById('tableWrap').innerHTML = '<div class="loading-bar"><div class="spinner"></div> Scanning all customers... this takes about 2 minutes.<div class="progress">Reading each customer from the Google Sheet tracker.</div></div>';
+    const showSpinner = id => {
+        document.getElementById(id).innerHTML = '<div class="loading-bar"><div class="spinner"></div> Loading data...</div>';
+    };
 
-    try {
-        const resp = await fetch('api/shortfalls');
-        const result = await resp.json();
-
-        data.bpro = result.bpro || [];
-        data.po = result.po || [];
-
-        document.getElementById('bproCount').textContent = data.bpro.length;
-        document.getElementById('poCount').textContent = data.po.length;
-        document.getElementById('custCount').textContent = result.summary?.customers_scanned || '—';
-        document.getElementById('bproBadge').textContent = data.bpro.length;
-        document.getElementById('poBadge').textContent = data.po.length;
-
-        populateFilters();
-        renderTable();
-    } catch (e) {
-        document.getElementById('tableWrap').innerHTML = `<div class="loading-bar" style="color:#d32f2f">Error: ${e.message}</div>`;
+    if (activeView === 'so') {
+        showSpinner('soTableWrap');
+        try {
+            const resp = await fetch('api/shortfalls');
+            const result = await resp.json();
+            soData.bpro = result.bpro || [];
+            soData.po = result.po || [];
+            document.getElementById('bproCount').textContent = soData.bpro.length;
+            document.getElementById('poCount').textContent = soData.po.length;
+            document.getElementById('custCount').textContent = result.summary?.customers_scanned || '—';
+            document.getElementById('bproBadge').textContent = soData.bpro.length;
+            document.getElementById('poBadge').textContent = soData.po.length;
+            populateSOFilters();
+            renderSOTable();
+        } catch (e) {
+            document.getElementById('soTableWrap').innerHTML = `<div class="loading-bar" style="color:#d32f2f">Error: ${e.message}</div>`;
+        }
+    } else {
+        showSpinner('mpTableWrap');
+        try {
+            const resp = await fetch('api/monthly-plan');
+            const result = await resp.json();
+            mpData.items = result.items || [];
+            mpData.summary = result.summary || {};
+            const s = mpData.summary;
+            document.getElementById('mpShortfalls').textContent = s.shortfall_count || 0;
+            document.getElementById('mpBpro').textContent = s.needs_bpro || 0;
+            document.getElementById('mpIpro').textContent = s.needs_ipro || 0;
+            document.getElementById('mpPo').textContent = s.needs_po || 0;
+            document.getElementById('mpCust').textContent = s.customers || '—';
+            document.getElementById('allBadge').textContent = mpData.items.length;
+            document.getElementById('shortBadge').textContent = s.shortfall_count || 0;
+            document.getElementById('nbproBadge').textContent = s.needs_bpro || 0;
+            document.getElementById('niproBadge').textContent = s.needs_ipro || 0;
+            document.getElementById('npoBadge').textContent = s.needs_po || 0;
+            populateMPFilters();
+            renderMPTable();
+        } catch (e) {
+            document.getElementById('mpTableWrap').innerHTML = `<div class="loading-bar" style="color:#d32f2f">Error: ${e.message}</div>`;
+        }
     }
 
     btn.disabled = false;
-    btn.textContent = 'Scan All Customers';
+    btn.textContent = 'Load Data';
 }
 </script>
 </body>
